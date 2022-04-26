@@ -1,57 +1,15 @@
-import { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import './App.scss';
 import done from './images/done.png'
+import {listF, listDs, listDl} from "./lists"
 
 function App() {
-  const listF = [
-    {
-      id: 1,
-      text: "Foundation 1",
-      check: false
-    },
-    {
-      id: 2,
-      text: "Foundation 2",
-      check: false
-    },
-    {
-      id: 3,
-      text: "Foundation 3",
-      check: false
-    },
-    {
-      id: 4,
-      text: "Foundation 4",
-      check: false
-    },
-    {
-      id: 5,
-      text: "Foundation 5",
-      check: false
-    }
-  ]
-  const listDs = [
-    {
-      id: 1,
-      text: "Discovery 1",
-      check: false
-    },
-    {
-      id: 2,
-      text: "Discovery 2",
-      check: false
-    },
-    {
-      id: 3,
-      text: "Discovery 3",
-      check: false
-    }
-  ]
   const[listFoundation, setListFoundation]=useState(listF)
   const[doneFoundation, setDoneFoundation]=useState(false)
   const[listDiscovery, setListDiscovery]=useState(listDs)
   const[doneDiscover, setDoneDiscover]=useState(false)
-
+  const[listDelivery, setListDelivery]=useState(listDl)
+  const[doneDelivery, setDoneDelivery]=useState(false)
   const [data, setData] = useState("");
   
   useEffect(() => {
@@ -64,14 +22,22 @@ function App() {
   }, [])
 
   useEffect(()=>{
-    listFoundation.map(item=>setDoneFoundation(item.check))
+    listFoundation.map(item=>{
+      if(item.check){
+        return setDoneFoundation(true)
+      } else{
+        return setDoneFoundation(false)
+      }
+    })
     listDiscovery.map(item=>setDoneDiscover(item.check))
-    if(doneFoundation && doneDiscover){
+    listDelivery.map(item=>setDoneDelivery(item.check))
+
+    if(doneFoundation && doneDiscover && doneDelivery){
       setTimeout(()=>{
         alert(data.text)
       },300)
     }
-  },[listFoundation, doneFoundation, listDiscovery, doneDiscover])
+  },[listFoundation, doneFoundation, listDiscovery, doneDiscover, listDelivery, doneDelivery])
 
   const handleOnChangeF = (id) => {
     setListFoundation(
@@ -86,10 +52,27 @@ function App() {
       })
     )
   }
+
   const handleOnChangeDs = (id) => {
     if(doneFoundation){
       setListDiscovery(
         listDiscovery.map(item => {
+          if(item.id === id){
+            return {
+              ...item,
+              check : !item.check
+            }
+          }
+          return item;
+        })
+      )
+    }
+  }
+
+  const handleOnChangeDl = (id) => {
+    if(doneFoundation && doneDiscover){
+      setListDelivery(
+        listDelivery.map(item => {
           if(item.id === id){
             return {
               ...item,
@@ -154,12 +137,24 @@ function App() {
           <h2>
             <span>3</span>
             Delivery
-            {/* <img src={checkedDl ? done : ""}/> */}
+            <img src={doneDelivery ? done : ""}/>
           </h2>
-          {/* <label>
-            <input type="checkbox" checked={checkedDl} onChange={handleChengeDelivery}/>
-            Learn
-          </label> */}
+          {listDelivery.map(item => {
+            return (
+              <div key={item.id}>
+                <label htmlFor={`dl-${item.id}`}>
+                  <input
+                    id={`dl-${item.id}`}
+                    type="checkbox"
+                    value={item.text}
+                    checked={item.check}
+                    onChange={() => handleOnChangeDl(item.id)}
+                  />
+                  {item.text}
+                </label>
+              </div>
+            );
+          })}
         </div>
     </div>
   );

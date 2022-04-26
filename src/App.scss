@@ -1,3 +1,6 @@
+$size: 10px;
+$color: rgb(220, 220, 220);
+
 *{
   margin: 0;
   padding: 0;
@@ -7,42 +10,42 @@ h1{
   text-align: center;
 }
 .startupStep{
-  border: 1px solid rgb(219, 219, 219);
-  width: 400px;
-  margin: 30px auto;
-  padding: 30px;
+  border: 1px solid $color;
+  width: $size * 40;
+  margin: $size*3 auto;
+  padding:  $size*3;
 }
 .startupStep > div{
-  border-bottom: 1px solid rgb(220, 220, 220);
-  padding: 20px;
+  border-bottom: 1px solid $color;
+  padding:  $size*2;
 }
 .startupStep h2{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom:  $size*2;
 }
 .startupStep h2 > span{
-  width: 40px;
-  height: 40px;
-  background: rgb(42, 41, 41);
+  width:  $size*4;
+  height:  $size*4;
+  background: rgb(53, 53, 53);
   display: inline-block;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  margin-right: 20px;
+  margin-right:  $size*2;
   color: white;
 }
 .startupStep h2 > img{
-  width: 30px;
-  margin-left: 20px;
+  width:  $size*3;
+  margin-left:  $size*2;
 }
 label{
   display: flex;
 }
 input{
   margin-right: 10px;
-  width: 20px;
-  height: 20px;
+  width:  $size*2;
+  height:  $size*2;
 }
